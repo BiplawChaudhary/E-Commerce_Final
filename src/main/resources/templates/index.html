@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<h1>This is Homepage.</h1>
+<h2>Some are good.</h2>
+
+<a th:href="@{/login}"><button>Login</button></a>
+<a th:href="@{/sign-up}"><button>Sign-Up</button></a>
+
+
+<!--Products By Category-->
+<h1>Products By Category</h1>
+<div class="container" th:each="cat: ${allCategory}">
+    <div class="row" th:each="product: ${allProduct}">
+        <h2 th:text="${cat.categoryName}"></h2>
+        <div class="col-sm" th:if="${cat.categoryName == product.category.categoryName}">
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{${product.images.path}}" class="card-img-top" alt="Image" width="50%">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${product.productName}">Card title</h5>
+                    <p class="card-text" >Rs. <span th:text="${product.price}"> </span></p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-sm">
+          One of three columns
+        </div>
+        <div class="col-sm">
+          One of three columns
+        </div>
+
+        <div class="col-sm">
+          One of three columns
+        </div> -->
+    </div>
+</div>
+
+
+<!--//Products Section-->
+<!--<section th:each="cat: ${allCategory}">-->
+<!--  <section th:each="product : ${allProduct}" style="border:2px solid red;">-->
+<!--      <section th:if="${cat.categoryName == product.category.categoryName}">-->
+<!--            <h1 th:text="${cat.categoryName}"></h1>-->
+<!--            <h2 th:text="${product.productName}"></h2>-->
+<!--          <a href=""><button>Add To Cart</button></a>-->
+<!--      </section>-->
+<!--  </section>-->
+<!--</section>-->
+
+<!--<section th:each="cat : ${allCategory}">-->
+<!--    <h1 th:text="${cat.categoryName}"></h1>-->
+<!--    <section th:each="product : ${productsByCategory[cat.categoryName]}" th:if="${product != null}" style="border:2px solid red;">-->
+<!--        <h2 th:text="${product.productName}"></h2>-->
+<!--    </section>-->
+<!--</section>-->
+
+
+<section >
+
+</section>
+</body>
+</html>
