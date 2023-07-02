@@ -12,20 +12,35 @@
 
 <a th:href="@{/login}"><button>Login</button></a>
 <a th:href="@{/sign-up}"><button>Sign-Up</button></a>
+<a th:href="@{/my-cart}"><button>My Cart</button></a>
 
 
 <!--Products By Category-->
 <h1>Products By Category</h1>
+<!--Iterate over each category-->
 <div class="container" th:each="cat: ${allCategory}">
+<!--    Display the name of the category-->
+    <h2 th:text="${cat.categoryName}"></h2>
+<!--    Then for each category, iterate over all the products-->
     <div class="row" th:each="product: ${allProduct}">
-        <h2 th:text="${cat.categoryName}"></h2>
+<!--        If the category name and the name of category on product match-->
         <div class="col-sm" th:if="${cat.categoryName == product.category.categoryName}">
+<!--            Display the product on that category on a card-->
             <div class="card" style="width: 18rem;">
+<!--                Dispalying the product's image-->
                 <img th:src="@{${product.images.path}}" class="card-img-top" alt="Image" width="50%">
+<!--                The displaying the card's info and a add to cart button-->
                 <div class="card-body">
                     <h5 class="card-title" th:text="${product.productName}">Card title</h5>
                     <p class="card-text" >Rs. <span th:text="${product.price}"> </span></p>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
+
+                    <form  th:action="@{/add-to-cart/{product_id} (product_id = ${product.id}) }" method="post">
+                        <label>
+                            Quantity
+                            <input type="number" th:field="*{cartdto.quantity}">
+                        </label>
+                        <input type="submit" class="btn btn-primary" value="Add To Cart">
+                    </form>
                 </div>
             </div>
         </div>
@@ -40,6 +55,8 @@
           One of three columns
         </div> -->
     </div>
+
+    <br><br>
 </div>
 
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+
+    <style>
+        #card{
+            box-shadow:2px 2px 2px 1px rgba(0,0,0,0.6);
+            margin: 1em 5em;
+        }
+        #item{
+            animation: showItem 2s linear;
+        }
+      @keyframes showItem {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+    </style>
+</head>
+<body>
+    <p th:text="${deleteMsg}" id="item"></p>
+    <h1>My Cart</h1>
+
+    <h2 th:if="${cartItems.size()==0}">No Items in cart</h2>
+
+<section th:if="${cartItems.size()!=0}">
+    <section th:each="cartItem : ${cartItems}" id="card">
+        <img th:src="@{${cartItem.products.images.path}}" alt="Product Image" style="width:50%;">
+        <h3 th:text="${cartItem.products.productName}"></h3>
+        <form action="" method="post">
+            <label>Quantity
+                <input type="text" th:value="${cartItem.quantity}"></label>
+        </form>
+
+        <a th:href="@{/delete-item/{id} (id = ${cartItem.id})}"><button>Delete</button></a>
+    </section>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  // Code to be executed when the DOM is ready
+  // ...
+
+  // Example: Log a message
+  console.log('DOM is ready');
+  }
+
+
+
+
+});
+
+</script>
+
+</body>
+</html>

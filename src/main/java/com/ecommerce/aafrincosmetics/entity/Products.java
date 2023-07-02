@@ -37,4 +37,8 @@ public class Products {
     @JoinColumn(name = "image_id")
     private Images images;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
 }

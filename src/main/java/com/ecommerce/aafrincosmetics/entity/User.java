@@ -43,8 +43,8 @@ public class User implements UserDetails {
 //    @OneToMany(mappedBy = "user")
 //    private List<Wishlist> wishlist;
 //
-//    @OneToMany(mappedBy = "user")
-//    private List<Cart> carts;
+    @OneToMany(mappedBy = "user")
+    private List<Cart> carts;
 //
 //    @OneToMany(mappedBy = "user")
 //    private List<Orders> orders;

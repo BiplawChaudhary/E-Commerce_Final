@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
 
         return new UserResponseDto(savedUser);
     }
+
+    @Override
+    public UserResponseDto findUserByUserName(String username) {
+        return new UserResponseDto(userRepo.getUserByUsername(username));
+    }
 }
