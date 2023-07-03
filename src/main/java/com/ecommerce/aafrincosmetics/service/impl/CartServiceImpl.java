@@ -11,6 +11,7 @@ import com.ecommerce.aafrincosmetics.repo.CartRepo;
 import com.ecommerce.aafrincosmetics.repo.ProductsRepo;
 import com.ecommerce.aafrincosmetics.repo.UserRepo;
 import com.ecommerce.aafrincosmetics.service.CartService;
+import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import com.ecommerce.aafrincosmetics.service.ProductsService;
 import com.ecommerce.aafrincosmetics.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +28,12 @@ public class CartServiceImpl implements CartService {
     private final CartRepo cartRepo;
     private final UserRepo userRepo;
     private final ProductsRepo productsRepo;
+    private final MiscService miscService;
 
     //Add to cart function
     @Override
     public CartResponseDto addProductToCart(CartRequestDto dto) {
-        //Getting the username of the authenticated user
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        //Finding the user
-        User loggedInUser = userRepo.getUserByUsername(username);
+        User loggedInUser = miscService.getLoggedInUser();
 
 
         //Finding the product
@@ -62,11 +60,7 @@ public class CartServiceImpl implements CartService {
     //Method to get all the items in the cart of the user
     @Override
     public List<CartResponseDto> getAllCartItemsOfUser() {
-        //Getting the username of the authenticated user
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        //Finding the user
-        User loggedInUser = userRepo.getUserByUsername(username);
+        User loggedInUser = miscService.getLoggedInUser();
 
         List<CartResponseDto> allCartItems = new ArrayList<>();
 
