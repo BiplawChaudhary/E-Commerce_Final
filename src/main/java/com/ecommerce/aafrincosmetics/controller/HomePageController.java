@@ -44,7 +44,4 @@ public class HomePageController {
         return "demo/index";
     }
 
-
-
-
 }

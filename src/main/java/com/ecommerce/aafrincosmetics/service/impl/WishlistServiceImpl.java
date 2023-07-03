@@ -32,6 +32,12 @@ public class WishlistServiceImpl implements WishlistService {
         //Getting the product
         Products foundProduct = productsRepo.findById(product_id).get();
 
+        //Checking if the item exists in wishlist for user
+        if(wishlistRepo.checkIfProductExistsForUserInWishlist(loggedInUser.getId(), foundProduct.getId()) != null){
+            System.out.println("Duplicate Item");
+            //Do Something here
+        }
+
         //Creating new wishlist and adding items to it.
         Wishlist newWishlist = new Wishlist();
         newWishlist.setUser(loggedInUser);

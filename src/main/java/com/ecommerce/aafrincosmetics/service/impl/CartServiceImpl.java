@@ -35,9 +35,16 @@ public class CartServiceImpl implements CartService {
     public CartResponseDto addProductToCart(CartRequestDto dto) {
         User loggedInUser = miscService.getLoggedInUser();
 
-
         //Finding the product
         Products selectedProduct = productsRepo.findById(dto.getProduct_id()).get();
+
+        //Checking the product already exists in the cart for the user
+        if(cartRepo.checkIfProductExistsForUserInCart(loggedInUser.getId(),selectedProduct.getId()) != null){
+            System.out.println("Dublicate Item");
+            //Do Something or redirect to somewhere then throw some exception
+
+
+        }
 
         //Creating the new cart object
         Cart newCart = new Cart();
