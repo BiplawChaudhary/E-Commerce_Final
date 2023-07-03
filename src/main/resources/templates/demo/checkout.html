@@ -24,13 +24,13 @@
         <h3 th:if="${shipmentDetails.size() == 0}">No Address</h3>
 
         <section th:if="${shipmentDetails.size() != 0}">
-            <form action="">
+            <form th:action="@{/create-order}" method="post">
                 <label th:each="detail: ${shipmentDetails}">
+                    <input type="checkbox" name="selectedDetails" th:value="*{detail.id}">
                     <p>City: <span th:text="${detail.address}"> </span></p>
                     <p>State: <span th:text="${detail.city}"> </span> </p>
                     <p>Address: <span th:text="${detail.state}"> </span></p>
                     <p>Phone: <span th:text="${detail.phone}"> </span></p>
-                    <input type="checkbox" >
                 </label>
 
                 <input type="submit" value="Continue to Payment">

@@ -3,13 +3,17 @@ package com.ecommerce.aafrincosmetics.controller;
 import com.ecommerce.aafrincosmetics.dto.request.CartRequestDto;
 import com.ecommerce.aafrincosmetics.dto.request.ShipmentRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
+import com.ecommerce.aafrincosmetics.entity.Order;
+import com.ecommerce.aafrincosmetics.entity.OrderItems;
 import com.ecommerce.aafrincosmetics.service.*;
+import com.ecommerce.aafrincosmetics.service.Others.EmailService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -25,6 +29,11 @@ public class HomePageController {
 
     private final ShipmentService shipmentService;
     private final CartService cartService;
+
+    private final OrderService orderService;
+    private final OrderItemsService orderItemsService;
+
+    private final EmailService emailService;
 
 
     //Getting the Homepage
@@ -85,6 +94,41 @@ public class HomePageController {
         shipmentService.deleteShipmentDetails(id);
         return "redirect:/checkout";
     }
+
+    @GetMapping("/set-order-items")
+    public String getOrderItems(@ModelAttribute("createdOrder") Order createdOrder){
+        List<OrderItems> orderItems = orderItemsService.generateOrderItems(createdOrder);
+
+        //--Send the email to the user
+        String subject = "Order Placed Successfully";
+
+        String message = "Dear User, \n" +
+                "Your order has been placed successfully." +
+                "Your order number is " + createdOrder.getOrderNo() + "." +
+                "The items you ordered are: \n\n";
+
+        for(OrderItems each: orderItems){
+            message += each.getProduct().getProductName();
+            message += each.getPrice();
+            message += "\n\n";
+        }
+
+        emailService.sendEmail(miscService.getLoggedInUser().getEmail(), subject, message);
+        System.out.println("Order Done");
+        return "redirect:/";
+    }
+
+    @PostMapping("/create-order")
+    public String createOrderForUser(RedirectAttributes redirectAttributes,
+                                     @RequestParam("selectedDetails") String[] selectedDetails){
+
+        Order createdOrder = orderService.saveOrderToTable(Integer.valueOf(selectedDetails[0]));
+        redirectAttributes.addAttribute("createdOrder", createdOrder);
+        return "redirect:/set-order-items";
+
+    }
+
+
 
 
 
