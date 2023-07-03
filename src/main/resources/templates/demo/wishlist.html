@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wishlist</title>
+
+    <style>
+           #card{
+            box-shadow:2px 2px 2px 1px rgba(0,0,0,0.6);
+            margin: 1em 5em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My wishlist</h1>
+
+    <h3 th:if="${allItems.size() == 0}">No Items in Wihslist</h3>
+
+    <section th:if="${allItems.size() != 0}">
+        <section th:each="item:${allItems}" id="card">
+            <img th:src="@{${item.products.images.path}}" alt="Image" style="width:20%;">
+            <h4 th:text="${item.products.productName}"></h4>
+
+            <a th:href="@{delete-wishlist/{id}(id = ${item.id})}"><button>Delete</button></a>
+        </section>
+    </section>
+
+</body>
+</html>

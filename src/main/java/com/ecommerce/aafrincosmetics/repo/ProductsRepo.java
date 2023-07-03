@@ -11,4 +11,6 @@ public interface ProductsRepo extends JpaRepository<Products, Integer> {
 
 //    List<ProductsResponseDto> findByCategory_CategoryName(String name);
     List<ProductsResponseDto> findByCategory(Category category);
+
+
 }

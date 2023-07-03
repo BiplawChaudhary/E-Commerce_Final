@@ -13,6 +13,7 @@
 <a th:href="@{/login}"><button>Login</button></a>
 <a th:href="@{/sign-up}"><button>Sign-Up</button></a>
 <a th:href="@{/my-cart}"><button>My Cart</button></a>
+<a th:href="@{/my-wishlist}">My Wishlist</a>
 
 
 <!--Products By Category-->
@@ -41,19 +42,12 @@
                         </label>
                         <input type="submit" class="btn btn-primary" value="Add To Cart">
                     </form>
+
+
+                    <a  th:href="@{/add-to-wishlist/{id} (id = ${product.id})}"><button>Wishlist</button></a>
                 </div>
             </div>
         </div>
-        <!-- <div class="col-sm">
-          One of three columns
-        </div>
-        <div class="col-sm">
-          One of three columns
-        </div>
-
-        <div class="col-sm">
-          One of three columns
-        </div> -->
     </div>
 
     <br><br>
