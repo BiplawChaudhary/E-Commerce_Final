@@ -50,10 +50,14 @@ public class AddToCartController {
         if(miscService.isUserLoggedIn()){
             //Get all the items in the cart
             List<CartResponseDto> allCartItems = cartService.getAllCartItemsOfUser();
+
+
             //Calculating the total
             for(CartResponseDto each: allCartItems){
                 total += (each.getQuantity() * each.getProducts().getPrice());
             }
+
+
             model.addAttribute("cartItems",allCartItems );
 
             model.addAttribute("deleteMsg", deleteMsg);

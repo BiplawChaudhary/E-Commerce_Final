@@ -12,6 +12,7 @@ import com.ecommerce.aafrincosmetics.repo.ProductsRepo;
 import com.ecommerce.aafrincosmetics.repo.UserRepo;
 import com.ecommerce.aafrincosmetics.service.CartService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
+import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
 import com.ecommerce.aafrincosmetics.service.ProductsService;
 import com.ecommerce.aafrincosmetics.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,7 @@ public class CartServiceImpl implements CartService {
         if(cartRepo.checkIfProductExistsForUserInCart(loggedInUser.getId(),selectedProduct.getId()) != null){
             System.out.println("Dublicate Item");
             //Do Something or redirect to somewhere then throw some exception
-
-
+            throw new ProductAlreadyExistsException("Product Already exists in the database.");
         }
 
         //Creating the new cart object
