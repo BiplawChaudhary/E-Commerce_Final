@@ -7,7 +7,8 @@ import com.ecommerce.aafrincosmetics.entity.Wishlist;
 import com.ecommerce.aafrincosmetics.repo.ProductsRepo;
 import com.ecommerce.aafrincosmetics.repo.WishlistRepo;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
-import com.ecommerce.aafrincosmetics.service.Others.WishlistService;
+import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
+import com.ecommerce.aafrincosmetics.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +33,11 @@ public class WishlistServiceImpl implements WishlistService {
         //Getting the product
         Products foundProduct = productsRepo.findById(product_id).get();
 
-        //Checking if the item exists in wishlist for user
+        //git gChecking if the item exists in wishlist for user
         if(wishlistRepo.checkIfProductExistsForUserInWishlist(loggedInUser.getId(), foundProduct.getId()) != null){
             System.out.println("Duplicate Item");
             //Do Something here
+            throw new ProductAlreadyExistsException("Product already exists in the wishlist");
         }
 
         //Creating new wishlist and adding items to it.

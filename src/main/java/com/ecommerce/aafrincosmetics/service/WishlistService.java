@@ -1,4 +1,4 @@
-package com.ecommerce.aafrincosmetics.service.Others;
+package com.ecommerce.aafrincosmetics.service;
 
 import com.ecommerce.aafrincosmetics.dto.response.WishlistResponseDto;
 

@@ -2,12 +2,12 @@ package com.ecommerce.aafrincosmetics.controller;
 
 
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
-import com.ecommerce.aafrincosmetics.service.Others.WishlistService;
+import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
+import com.ecommerce.aafrincosmetics.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
@@ -33,8 +33,13 @@ public class WishlistController {
     @GetMapping("/add-to-wishlist/{id}")
     public String addItemToWIshlist(@PathVariable("id") Integer product_id){
         if(miscService.isUserLoggedIn()){
-            wishlistService.addProductToWishlist(product_id);
-            return "redirect:/";
+            try{
+                wishlistService.addProductToWishlist(product_id);
+                return "redirect:/";
+            }catch (ProductAlreadyExistsException ex){
+                System.out.println("Product Already Exists.");
+                return "redirect:/";
+            }
         }
         else{
             return "redirect:/login";
