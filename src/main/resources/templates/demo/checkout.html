@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <style>
+        main{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        #shippingAddress label{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <section id="shippingAddress">
+        <a th:href="@{/get-add-address-form}"><button>Add New Shipping Address</button></a>
+
+        <h1>Shipping Address</h1>
+
+        <h3 th:if="${shipmentDetails.size() == 0}">No Address</h3>
+
+        <section th:if="${shipmentDetails.size() != 0}">
+            <form action="">
+                <label th:each="detail: ${shipmentDetails}">
+                    <p>City: <span th:text="${detail.address}"> </span></p>
+                    <p>State: <span th:text="${detail.city}"> </span> </p>
+                    <p>Address: <span th:text="${detail.state}"> </span></p>
+                    <p>Phone: <span th:text="${detail.phone}"> </span></p>
+                    <input type="checkbox" >
+                </label>
+
+                <input type="submit" value="Continue to Payment">
+            </form>
+        </section>
+
+    </section>
+
+    <section id="priceSection">
+        <p>Display the items here</p>
+
+        <section>
+            <h4>Total: <span th:text="${totalPrice}">125</span></h4>
+        </section>
+    </section>
+
+</main>
+</body>
+</html>
