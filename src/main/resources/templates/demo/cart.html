@@ -30,7 +30,7 @@
 
 <section th:if="${cartItems.size()!=0}">
     <section th:each="cartItem : ${cartItems}" id="card">
-        <img th:src="@{${cartItem.products.images.path}}" alt="Product Image" style="width:50%;">
+        <img th:src="@{${cartItem.products.images.path}}" alt="Product Image" style="width:20%;">
         <h3 th:text="${cartItem.products.productName}"></h3>
         <form action="" method="post">
             <label>Quantity
@@ -38,7 +38,12 @@
         </form>
 
         <a th:href="@{/delete-item/{id} (id = ${cartItem.id})}"><button>Delete</button></a>
+
+        <!--        Calculating the total amount-->
+        <p th:with="totalAmt=(${cartItem.products.price * cartItem.quantity})"></p>
     </section>
+
+    <h5>Total Amount <span th:text="${total}"></span></h5>
 </section>
 
 <script>

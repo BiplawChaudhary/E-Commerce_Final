@@ -1,6 +1,7 @@
 package com.ecommerce.aafrincosmetics.controller;
 
 import com.ecommerce.aafrincosmetics.dto.request.CartRequestDto;
+import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
 import com.ecommerce.aafrincosmetics.service.CartService;
 import com.ecommerce.aafrincosmetics.service.CategoryService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,11 +63,19 @@ public class HomePageController {
     //Show the items in the cart -- Cart's Page
     @GetMapping("/my-cart")
     public String getMyCart(Model model, @ModelAttribute("deleteMsg") String deleteMsg){
+        Integer total = 0;
         //If the user is logged in
         if(miscService.isUserLoggedIn()){
-            model.addAttribute("cartItems", cartService.getAllCartItemsOfUser());
+            //Get all the items in the cart
+            List< CartResponseDto> allCartItems = cartService.getAllCartItemsOfUser();
+            //Calculating the total
+            for(CartResponseDto each: allCartItems){
+                total += (each.getQuantity() * each.getProducts().getPrice());
+            }
+            model.addAttribute("cartItems",allCartItems );
 
             model.addAttribute("deleteMsg", deleteMsg);
+            model.addAttribute("total", total);
             return "demo/cart";
         }else{
             return "redirect:/login";
