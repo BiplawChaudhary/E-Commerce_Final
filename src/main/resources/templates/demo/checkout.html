@@ -25,6 +25,7 @@
 
         <section th:if="${shipmentDetails.size() != 0}">
             <form th:action="@{/create-order}" method="post">
+
                 <label th:each="detail: ${shipmentDetails}">
                     <input type="checkbox" name="selectedDetails" th:value="*{detail.id}">
                     <p>City: <span th:text="${detail.address}"> </span></p>

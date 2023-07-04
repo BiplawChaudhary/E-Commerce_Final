@@ -15,7 +15,14 @@
 <a th:href="@{/my-cart}"><button>My Cart</button></a>
 <a th:href="@{/my-wishlist}"><button>My Wishlist</button></a>
 
-
+<form th:action="@{/search}">
+    <select name="searchCategory" id="">
+        <option value="noCategory">All Category</option>
+        <option th:each="cat : ${allCategory}" th:value="${cat.categoryName}" th:text="${cat.categoryName}"></option>
+    </select>
+    <input type="text" name="searchProduct" required>
+    <input type="submit">
+</form>
 <!--Products By Category-->
 <h1>Products By Category</h1>
 <!--Iterate over each category-->
