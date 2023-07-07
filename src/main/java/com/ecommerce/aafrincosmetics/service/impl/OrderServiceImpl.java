@@ -35,13 +35,7 @@ public class OrderServiceImpl implements OrderService {
             sb.append(randomChar);
         }
 
-        //Getting the total of cart
-        List<CartResponseDto> allCartItems = cartService.getAllCartItemsOfUser();
-        Integer total = 0;
 
-        for(CartResponseDto each: allCartItems){
-            total += each.getQuantity() * each.getProducts().getPrice();
-        }
 
         //Adding it as order no
         newOrder.setOrderNo(sb.toString());
@@ -49,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setShipment(shipmentRepo.findById(shipmentId).get());
         newOrder.setUser(miscService.getLoggedInUser());
         newOrder.setStatus("Order Created");
-        newOrder.setTotalPrice(total);
+        newOrder.setTotalPrice(cartService.getTotalCartValueOfUser());
 
         return orderRepo.save(newOrder);
     }

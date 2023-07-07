@@ -101,4 +101,16 @@ public class CartServiceImpl implements CartService {
 //
 //        return new CartResponseDto(cartRepo.save(foundItem));
 //    }
+
+    public Integer getTotalCartValueOfUser(){
+        Integer total = 0;
+        //Get all the items in the cart
+        List<CartResponseDto> allCartItems = getAllCartItemsOfUser();
+
+        //Calculating the total
+        for(CartResponseDto each: allCartItems){
+            total += (each.getQuantity() * each.getProducts().getPrice());
+        }
+        return total;
+    }
 }

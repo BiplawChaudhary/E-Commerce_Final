@@ -19,4 +19,6 @@ public interface CartService {
 
     //Method to update the quantity in the cart
     CartResponseDto updateItemsInCart( Integer cart_id, Integer quantity);
+
+    Integer getTotalCartValueOfUser();
 }
