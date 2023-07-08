@@ -10,4 +10,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
             value = "SELECT * FROM users WHERE username=?1"
     )
     User getUserByUsername(String username);
+
+    User findByEmail(String email);
 }
