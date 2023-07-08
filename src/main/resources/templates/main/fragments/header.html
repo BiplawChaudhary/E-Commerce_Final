@@ -57,9 +57,17 @@
                                     <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#heart"></use></svg>
                                 </a>
                             </li>
+
+<!--                            // Display my order's&ndash;&gt;-->
+                            <li th:if="${#authorization.expression('isAuthenticated()')}" style="text-decoration:none;">
+                                <a th:href="@{/my-orders}" title="My Orders">
+                                    <i class="bi bi-bag"></i>
+                                </a>
+                            </li>
+
 <!--                            //If the user is not logged in-->
                             <li th:if="${!#authorization.expression('isAuthenticated()')}">
-                                <a th:href="@{/login}" class="rounded-circle bg-light p-2 mx-1">
+                                <a th:href="@{/login}" class="rounded-circle bg-light p-2 mx-1" title="Login">
                                     <svg width="24" height="24" viewBox="0 0 24 24">
                                         <use xlink:href="#user"></use>
                                     </svg>
@@ -80,14 +88,9 @@
                                 </a>
                             </li>
 
-<!--                            // Display my order's-->
-                            <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a th:href="@{/my-orders}">
-                                    <i class="bi bi-bag">Orders</i>
-                                </a>
-                            </li>
+<!--
 
-<!--                            //Display the cart-->
+                           //Display the cart-->
                             <li class="d-lg-none">
                                 <a th:href="@{my-cart}" class="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                     <svg width="24" height="24" viewBox="0 0 24 24"><use xlink:href="#cart"></use></svg>

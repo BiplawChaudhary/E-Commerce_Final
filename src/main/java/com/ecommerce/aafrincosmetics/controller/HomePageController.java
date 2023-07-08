@@ -78,11 +78,10 @@ public class HomePageController {
             //Only one value called
             List<Products> foundProducts  = productsRepo.findByProductNameContainingIgnoreCase(searchProduct);
             model.addAttribute("foundProducts",foundProducts );
-            //Display each product
-            for(Products each: foundProducts){
-                System.out.println(each.getProductName());
-            }
-
+//            //Display each product
+//            for(Products each: foundProducts){
+//                System.out.println(each.getProductName());
+//            }
 
         } else if (searchCategory != "noCategory" && searchProduct != null) {
             System.out.println("Both not null called."); //Debug
@@ -91,12 +90,13 @@ public class HomePageController {
             List<Products> foundProducts = productsRepo.findByProductNameContainingIgnoreCaseAndCategoryId(searchProduct,foundCategory.getId());
 
             model.addAttribute("foundProducts", foundProducts);
-//            Display each product
-            for(Products each: foundProducts){
-                System.out.println(each.getProductName());
-            }
+////            Display each product
+//            for(Products each: foundProducts){
+//                System.out.println(each.getProductName());
+//            }
         }
-        return "demo/searchResult";
+        model.addAttribute("cartdto", new CartRequestDto());
+        return "main/searchResult";
     }
 
 

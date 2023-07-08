@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <head>
+    <title>Search Products</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="/mainAssets/css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="/mainAssets/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  </head>
+</head>
+<body>
+
+
+<!--*********** HEADER *******************-->
+<div th:replace="main/fragments/header :: header"></div>
+
+<!--*************** SVG ****************-->
+<div th:replace="main/fragments/svg :: svg"></div>
+
+
+<div class="container" style="height: 100vh;">
+  <h1 style="text-align: center; margin-bottom: 1em;">Search Results</h1>
+
+  <div class="row">
+          <!--    Filters column-->
+              <div class="col-lg-2">
+
+                  <h5>Filters</h5>
+
+                  <div>
+                    <label >
+                      <input type="checkbox"> 0-500
+                    </label>
+                  </div>
+
+
+                  <div>
+                    <label>
+                      <input type="checkbox"> A-Z
+                    </label>
+                  </div>
+
+
+
+
+                  <div>
+                    <label>
+                      <input type="checkbox"> Category
+                    </label>
+                  </div>
+
+
+                  <div>
+                    <label >
+                      <input type="checkbox"> Availability
+                    </label>
+                  </div>
+
+
+                  <div>
+                    <label>
+                      <input type="checkbox"> Price
+                    </label>
+                  </div>
+
+
+
+              </div>
+
+
+        <!--    //Search Result Column-->
+            <div class="col-lg-10">
+              <h4 th:if="${foundProducts.size() == 0}">No Product Found</h4>
+
+              <div class="d-flex justify-content-space-around ">
+                <div th:each="product: ${foundProducts}">
+                  <!--                               On clicking the product redirect to the product's page ****-->
+                  <div class="product-item mx-3">
+                    <a th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+
+                    <!--                                        Image here-->
+                    <figure>
+                      <!--                                            ////// ********* REDIRECT TO SINGLE PAGE OF PRODUCT HERE *****-->
+                      <a href=" " title="Product Title">
+                        <img th:src="@{${product.images.path}}"  class="tab-image">
+                      </a>
+                    </figure>
+                    <a th:href="@{/get-single-product/{product_id} (product_id = ${product.id})}" style="text-decoration:none;">
+                      <!--                                        **********   DESCription *********-->
+                      <h3 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>
+                      <span class="qty"><span th:text="${product.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
+                      <span class="price" >Rs. <span th:text="${product.price}">495</span></span>
+                    </a>
+                    <div class="d-flex align-items-center justify-content-between">
+
+
+                      <!--                                            QUantity Form-->
+                      <form th:action="@{/add-to-cart/{product_id} (product_id = ${product.id})}" method="post">
+                        <!-- Name -->
+                        <div class="form-group d-flex " >
+                          <label>Quantity: </label>
+                          <input type="text" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}">
+                          <small class="form-text text-danger" style="font-weight: bold;"></small>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    </div>
+
+</div>
+
+
+<!--*********** Foooter **********-->
+<div th:replace="main/fragments/footer :: footer"></div>
+</body>
+</html>
