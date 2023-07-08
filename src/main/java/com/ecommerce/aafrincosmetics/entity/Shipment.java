@@ -26,6 +26,8 @@ public class Shipment {
 
     private String phone;
 
+    private String phone1;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

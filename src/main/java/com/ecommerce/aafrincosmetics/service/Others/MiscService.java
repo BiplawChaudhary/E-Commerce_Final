@@ -1,12 +1,16 @@
 package com.ecommerce.aafrincosmetics.service.Others;
 
 
+import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
 import com.ecommerce.aafrincosmetics.entity.User;
 import com.ecommerce.aafrincosmetics.repo.UserRepo;
+import com.ecommerce.aafrincosmetics.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,4 +35,6 @@ public class MiscService {
        return userRepo.getUserByUsername(username);
 
     }
+
+
 }

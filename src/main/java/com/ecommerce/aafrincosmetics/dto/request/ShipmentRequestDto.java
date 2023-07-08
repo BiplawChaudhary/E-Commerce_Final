@@ -18,4 +18,6 @@ public class ShipmentRequestDto {
     private String state;
 
     private String phone;
+
+    private String phone1;
 }

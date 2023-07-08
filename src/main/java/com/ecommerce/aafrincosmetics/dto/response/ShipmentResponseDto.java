@@ -24,11 +24,14 @@ public class ShipmentResponseDto {
 
     private String phone;
 
+    private String phone1;
+
     public ShipmentResponseDto(Shipment shipment){
         this.id = shipment.getId();
         this.address = shipment.getAddress();
         this.city = shipment.getCity();
         this.state = shipment.getState();
         this.phone = shipment.getPhone();
+        this.phone1 = shipment.getPhone1();
     }
 }

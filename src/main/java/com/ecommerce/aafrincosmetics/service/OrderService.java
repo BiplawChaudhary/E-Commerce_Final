@@ -6,7 +6,7 @@ import com.ecommerce.aafrincosmetics.entity.Order;
 public interface OrderService {
 
     //Save order to table
-    Order saveOrderToTable(Integer shipmentId);
+    Order saveOrderToTable(Integer shipmentId, String paymentMethod);
 
     Order directOrder(Integer id);
 }

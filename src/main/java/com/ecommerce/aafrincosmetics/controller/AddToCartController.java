@@ -4,7 +4,9 @@ import com.ecommerce.aafrincosmetics.dto.request.CartRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
 import com.ecommerce.aafrincosmetics.service.CartService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
+import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +29,27 @@ public class AddToCartController {
     FOr add to cart function pass the cartDto with fields qunatity, product_id to the cutomer
     then bind those values there and then save them to the able.
     * */
+//    @Async
     @PostMapping("/add-to-cart/{product_id}")
-    public String addToCartFunction(@ModelAttribute CartRequestDto cartRequestDto, @PathVariable("product_id") Integer product_id){
+    public String addToCartFunction(@ModelAttribute CartRequestDto cartRequestDto, @PathVariable("product_id") Integer product_id,
+                                    RedirectAttributes redirectAttributes){
+        //If the cart value is null then:
+        if(cartRequestDto.getQuantity() == null){
+            redirectAttributes.addAttribute("nullQuantityError", "Please select some quantity.");
+            return "redirect:/";
+        }
         //Only allowing to add to cart if authenticated
         if(miscService.isUserLoggedIn()){
-            cartRequestDto.setProduct_id(product_id);
+            try{
+                cartRequestDto.setProduct_id(product_id);
 
-            cartService.addProductToCart(cartRequestDto);
-            return "redirect:/";
+                CartResponseDto savedCartItem = cartService.addProductToCart(cartRequestDto);
+                return "redirect:/#"+ savedCartItem.getProducts().getCategory().getCategoryName();
+
+            }catch (ProductAlreadyExistsException ex){
+                redirectAttributes.addAttribute("duplicateError", "Product Already Added");
+                return "redirect:/";
+            }
         }else{
             return "redirect:/login";
         }
@@ -45,24 +60,16 @@ public class AddToCartController {
     //Show the items in the cart -- Cart's Page
     @GetMapping("/my-cart")
     public String getMyCart(Model model, @ModelAttribute("deleteMsg") String deleteMsg){
-        Integer total = 0;
+
         //If the user is logged in
         if(miscService.isUserLoggedIn()){
-            //Get all the items in the cart
             List<CartResponseDto> allCartItems = cartService.getAllCartItemsOfUser();
-
-
-            //Calculating the total
-            for(CartResponseDto each: allCartItems){
-                total += (each.getQuantity() * each.getProducts().getPrice());
-            }
-
 
             model.addAttribute("cartItems",allCartItems );
 
             model.addAttribute("deleteMsg", deleteMsg);
-            model.addAttribute("total", total);
-            return "demo/cart";
+            model.addAttribute("total", cartService.getTotalCartValueOfUser());
+            return "main/cart";
         }else{
             return "redirect:/login";
         }
