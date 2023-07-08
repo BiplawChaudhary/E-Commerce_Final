@@ -32,6 +32,7 @@ public class ProductsServiceImpl implements ProductsService {
         newProduct.setPrice(dto.getPrice());
         newProduct.setCategory(dto.getCategory());
         newProduct.setImages(dto.getImages());
+        newProduct.setManufacturer(dto.getManufacturer());
 
         return new ProductsResponseDto(productsRepo.save(newProduct));
     }
@@ -63,6 +64,7 @@ public class ProductsServiceImpl implements ProductsService {
         foundProduct.setPrice(dto.getPrice());
         foundProduct.setCategory(dto.getCategory());
         foundProduct.setImages(dto.getImages());
+        foundProduct.setManufacturer(dto.getManufacturer());
 
         return new ProductsResponseDto(productsRepo.save(foundProduct));
     }

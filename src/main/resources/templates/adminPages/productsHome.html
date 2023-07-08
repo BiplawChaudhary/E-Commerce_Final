@@ -55,6 +55,7 @@
                     <th scope="col">Name</th>
                     <th scope="col" class="text-center">Image</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Manufacturer</th>
                     <th scope="col">Category</th>
                     <th scope="col">Price</th>
                     <th scope="col">Stock</th>
@@ -66,6 +67,7 @@
                     <th th:text="${product.productName}">Something</th>
                     <td class="text-center" ><img th:src="@{${product.images.path}}" alt="product image"  style="max-width: 30%"></td>
                     <td th:text="${product.description}">Desc</td>
+                    <td th:text="${product.manufacturer}">Manufacturer</td>
                     <td th:text="${product.category.categoryName}">Hair</td>
                     <td>Rs. <span th:text="${product.price}">200</span></td>
                     <td th:text="${product.stock}"></td>

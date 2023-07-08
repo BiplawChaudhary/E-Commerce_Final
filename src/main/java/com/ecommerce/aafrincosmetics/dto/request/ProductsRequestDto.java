@@ -18,4 +18,5 @@ public class ProductsRequestDto {
     private Integer price;
     private Category category;
     private Images images;
+    private String manufacturer;
 }

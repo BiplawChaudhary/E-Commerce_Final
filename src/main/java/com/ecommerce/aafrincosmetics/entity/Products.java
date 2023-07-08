@@ -29,6 +29,8 @@ public class Products {
 
     private Integer price;
 
+    private String manufacturer;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
