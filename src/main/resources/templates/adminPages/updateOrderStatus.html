@@ -1,13 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title><!doctype html>
-      <html lang="en" xmlns:th="http://thymeleaf.org">
-      <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>Add Category</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Add Products</title>
   <link rel="shortcut icon" href="/adminAssets/assets/images/fav.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="/adminAssets/assets/images/fav.jpg">
@@ -38,27 +34,27 @@
 
 <div id="about" class="main-content px-4 bg-white py-5">
   <div class="titie-row row mb-3">
-    <h2 class="fw-bolder">Update Category</h2>
-    <a th:href="@{/admin/category/home}"><button class="btn btn-outline-info mt-2">Category Home</button></a>
+    <h2 class="fw-bolder">Update Order Status</h2>
   </div>
   <div class="row">
     <div class="col-md-7">
-      <p><b>Going to add a new category to the site?</b></p>
+      <p><b>Going to add a new product to the site?</b></p>
       <p class="pt-2 fs-6 text-justify">Fill the form below. </p>
+      <a th:href="@{/admin/manage-order}"><button class="btn btn-outline-info mt-2">Manage Order Home</button></a>
     </div>
 
     <div class="col-md-7 my-5">
       <div class="titie-row row mb-3">
-        <h2 class="fw-bolder">Add Category Form</h2>
+        <h2 class="fw-bolder">Update Order Status Form</h2>
       </div>
 
-      <!-- The form for adding product -->
-      <form th:action="@{/admin/category/update/{id} (id = ${dto.id})}" method="post" enctype="multipart/form-data">
+      <!-- ********** The form for adding product ********* -->
+      <form th:action="@{/admin/update-order-status/{id}(id=${dto.id})}" th:object="${dto}" method="post" enctype="multipart/form-data">
         <!-- Name -->
         <div class="form-group">
-          <label>Cateogry Name</label>
-          <input type="text" class="form-control" placeholder="Enter Category Name" th:field="*{dto.categoryName}" required>
-          <small class="form-text text-muted"></small>
+          <label>Status</label>
+          <input required type="text" class="form-control" placeholder="Enter New Status" th:field="*{status}">
+          <small class="form-text text-danger" style="font-weight: bold;" th:text="${error}"></small>
         </div>
 
         <button type="submit" class="btn btn-outline-success">Submit</button>
@@ -80,9 +76,4 @@
 <script src="/adminAssets/assets/plugins/testimonial/js/owl.carousel.min.js"></script>
 <script src="/adminAssets/assets/js/script.js"></script>
 
-</html></title>
-</head>
-<body>
-
-</body>
 </html>

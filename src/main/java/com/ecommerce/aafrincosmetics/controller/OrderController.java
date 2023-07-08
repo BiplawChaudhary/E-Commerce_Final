@@ -1,17 +1,19 @@
 package com.ecommerce.aafrincosmetics.controller;
 
+import com.ecommerce.aafrincosmetics.dto.response.OrderResponseDto;
 import com.ecommerce.aafrincosmetics.entity.Order;
 import com.ecommerce.aafrincosmetics.entity.OrderItems;
+import com.ecommerce.aafrincosmetics.entity.Products;
+import com.ecommerce.aafrincosmetics.service.CartService;
 import com.ecommerce.aafrincosmetics.service.OrderItemsService;
 import com.ecommerce.aafrincosmetics.service.OrderService;
 import com.ecommerce.aafrincosmetics.service.Others.EmailService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final OrderItemsService orderItemsService;
-
+    private final CartService cartService;
     private final EmailService emailService;
     private final MiscService miscService;
 
@@ -63,4 +65,45 @@ public class OrderController {
         return "redirect:/set-order-items";
 
     }
+
+    //Get the order's Page
+    @GetMapping("/my-orders")
+    public String getOrdersPage(Model model){
+        model.addAttribute("allOrders", orderService.getAllOrdersOfAUser());
+        model.addAttribute("total",cartService.getTotalCartValueOfUser());
+        return "main/order";
+    }
+
+    @GetMapping("/set-order-status/{id}/{status}")
+    public String setNewOrderStatus(Model model,
+                                    @PathVariable("id") Integer id,
+                                    @PathVariable("status") String status){
+
+        orderService.updateTheStatus(status,id);
+        return "redirect:/my-orders";
+    }
+
+    //Get the single product's page
+    @GetMapping("/get-single-order/{id}")
+    public String getSingleOrderpage(Model model,
+                                     @PathVariable("id") Integer id){
+
+        OrderResponseDto foundOrder = orderService.getOrderById(id);
+        model.addAttribute("foundOrder", foundOrder);
+
+//        Adding the status messge
+        if(foundOrder.getStatus().trim().equals("Created")){
+            model.addAttribute("statusMessage", "Your Order is placed Successfully.");
+        } else if (foundOrder.getStatus().trim().equals("Picked Up")) {
+            model.addAttribute("Picked Up","Your order has been picked up by the delivery team. ");
+        }else if (foundOrder.getStatus().trim().equals("Sent Out")) {
+            model.addAttribute("Sent Out","Your order has been sent out for delivery.\nIt should reach you soon. ");
+        }else if (foundOrder.getStatus().trim().equals("Delivery")) {
+            model.addAttribute("Delivery","Your order has been delivered.");
+        }
+
+
+        return "main/singleOrder";
+    }
+
 }

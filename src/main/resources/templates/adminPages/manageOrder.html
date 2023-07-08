@@ -23,7 +23,7 @@
       <li><a th:href="@{/admin/home}"><i class="bi bi-house-door fs-5 me-2"></i> Home</a></li>
       <li><a th:href="@{/admin/products}"><i class="bi fs-5 bi-archive me-2"></i> Products</a></li>
       <li><a th:href="@{/admin/category/home}"><i class="bi fs-5 bi-bookmarks me-2"></i> Category</a></li>
-      <li><a th:href="@{/admin/manage-order}"><i class="bi fs-5 bi-person-lines-fill me-2"></i> Order</a></li>
+      <li><a th:href="@{/admin/manage-order}"><i class="bi fs-5 bi-person-lines-fill me-2"></i> Orders</a></li>
 
     </ul>
   </div>
@@ -34,31 +34,60 @@
 
 <div id="about" class="main-content px-4 bg-white py-5">
   <div class="titie-row row mb-3">
-    <h2 class="fw-bolder">Add Category</h2>
+    <h2 class="fw-bolder">Manage Orders</h2>
   </div>
   <div class="row">
+
     <div class="col-md-7">
-      <p><b>Going to add a new category to the site?</b></p>
-      <p class="pt-2 fs-6 text-justify">Fill the form below. </p>
+      <p><b>Manage the orders</b></p>
     </div>
 
     <div class="col-md-7 my-5">
-      <div class="titie-row row mb-3">
-        <h2 class="fw-bolder">Add Category Form</h2>
-        <a th:href="@{/admin/category/home}"><button class="btn btn-outline-info mt-2">Category Home</button></a>
+      <div class="title-row row mb-3">
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">User Name</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">Shipment Address</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="order : ${allOrders}">
+            <th th:text="${order.user.username}"></th>
+            <th th:text="${order.orderNo}">1</th>
+
+
+            <td>
+              <p><span th:text="${order.shipment.address}">Mulpani peepalbot,</span>
+                <span th:text="${order.shipment.city}">Kohi,</span>
+                <span th:text="${order.shipment.state}"></span>
+              </p>
+
+              <p>
+                <b>Primary Phone: </b>  <span th:text="${order.shipment.phone}"></span>
+              </p>
+              <p>
+                <b>Secondary Phone: </b>  <span th:text="${order.shipment.phone1}"></span>
+              </p>
+            </td>
+
+
+            <td th:text="${order.paymentMethod}">Otto</td>
+            <td th:text="${order.totalPrice}">@mdo</td>
+            <td th:text="${order.status}"></td>
+            <td>
+              <a th:href="@{/admin/update-order-status/{id} (id = ${order.id})}"><button class="btn btn-outline-primary">Update Status</button></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
       </div>
-
-      <!-- The form for adding product -->
-      <form th:action="@{/admin/category/add-category}" method="post" enctype="multipart/form-data">
-        <!-- Name -->
-        <div class="form-group">
-          <label>Cateogry Name</label>
-          <input type="text" class="form-control" placeholder="Enter Category Name" th:field="*{dto.categoryName}" required>
-          <small class="form-text text-danger" style="font-weight: bold;" th:text="${error}">MEssage is here</small>
-        </div>
-
-        <button type="submit" class="btn btn-outline-success">Submit</button>
-      </form>
     </div>
 
   </div>
