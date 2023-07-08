@@ -46,10 +46,13 @@ public class HomePageController {
         model.addAttribute("allCategory", categoryService.getAllCategory());
         model.addAttribute("allProduct", productsService.getAllProducts());
 
+
+
         //If user is logged in add their wishlist to the index page
         if(miscService.isUserLoggedIn()){
             model.addAttribute("wishlist", wishlistService.allwishlistItemsOfUser());
             model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+
         }
 
         //Adding the cart dto the main page

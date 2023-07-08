@@ -6,6 +6,7 @@ import com.ecommerce.aafrincosmetics.service.CartService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class AddToCartController {
     FOr add to cart function pass the cartDto with fields qunatity, product_id to the cutomer
     then bind those values there and then save them to the able.
     * */
+//    @Async
     @PostMapping("/add-to-cart/{product_id}")
     public String addToCartFunction(@ModelAttribute CartRequestDto cartRequestDto, @PathVariable("product_id") Integer product_id,
                                     RedirectAttributes redirectAttributes){
@@ -41,8 +43,9 @@ public class AddToCartController {
             try{
                 cartRequestDto.setProduct_id(product_id);
 
-                cartService.addProductToCart(cartRequestDto);
-                return "redirect:/";
+                CartResponseDto savedCartItem = cartService.addProductToCart(cartRequestDto);
+                return "redirect:/#"+ savedCartItem.getProducts().getCategory().getCategoryName();
+
             }catch (ProductAlreadyExistsException ex){
                 redirectAttributes.addAttribute("duplicateError", "Product Already Added");
                 return "redirect:/";

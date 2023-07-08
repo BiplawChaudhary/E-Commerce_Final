@@ -36,15 +36,18 @@ public class OrderController {
 
         String message = "Dear User, \n" +
                 "Your order has been placed successfully." +
-                "Your order number is " + createdOrder.getOrderNo() + "." +
-                "The items you ordered are: \n\n";
+                "Your order number is \" " + createdOrder.getOrderNo() + "\" ." +
+                "The items you ordered are: \n\n"+
+                "Item Name | \tPrice | \tUnits | \tTotal| \n";
 
         for(OrderItems each: orderItems){
-            message += each.getProduct().getProductName();
-            message += each.getPrice();
+            message += each.getProduct().getProductName()+" | \t";
+            message += each.getPrice()+" | \t";
+            message += each.getQuantity() +" | \t";
+            message += each.getPrice() * each.getQuantity() + " | \t";
             message += "\n\n";
         }
-
+        System.out.println("MEssage: \n "+ message);// #Debug
         emailService.sendEmail(miscService.getLoggedInUser().getEmail(), subject, message);
         System.out.println("Order Done");
         return "redirect:/";
@@ -52,9 +55,10 @@ public class OrderController {
 
     @PostMapping("/create-order")
     public String createOrderForUser(RedirectAttributes redirectAttributes,
-                                     @RequestParam("selectedDetails") String[] selectedDetails){
+                                     @RequestParam("selectedDetails") String[] selectedDetails,
+                                     @RequestParam("paymentMethod") String paymentMethod){
 
-        Order createdOrder = orderService.saveOrderToTable(Integer.valueOf(selectedDetails[0]));
+        Order createdOrder = orderService.saveOrderToTable(Integer.valueOf(selectedDetails[0]),paymentMethod);
         redirectAttributes.addAttribute("createdOrder", createdOrder);
         return "redirect:/set-order-items";
 

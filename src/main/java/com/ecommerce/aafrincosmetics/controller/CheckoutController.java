@@ -35,18 +35,13 @@ public class CheckoutController {
     public String getCheckoutPage(Model model){
         if(miscService.isUserLoggedIn()){
             model.addAttribute("shipmentDetails", shipmentService.getAllShipmentDetails());
-            //Getting all the cart items
-            List<CartResponseDto> allCartItems =  cartService.getAllCartItemsOfUser();
 
-            Integer total=0;
-
-            for(CartResponseDto each: allCartItems){
-                total += each.getQuantity() * each.getProducts().getPrice();
-            }
+            Integer total= cartService.getTotalCartValueOfUser();
+            model.addAttribute("cartItems", cartService.getAllCartItemsOfUser());
 
 //            model.addAttribute("cartItems",allCartItems);
             model.addAttribute("totalPrice", total);
-            return "demo/checkout";
+            return "main/checkout";
         }else{
             return "redirect:/login";
         }
@@ -54,8 +49,9 @@ public class CheckoutController {
 
     @GetMapping("/get-add-address-form")
     public String getAddAddressForm(Model model){
-        model.addAttribute("detail", new ShipmentRequestDto());
-        return "demo/detailsForm";
+            model.addAttribute("detail", new ShipmentRequestDto());
+            return "main/detailsForm";
+
     }
 
     @PostMapping("/get-add-address-form")

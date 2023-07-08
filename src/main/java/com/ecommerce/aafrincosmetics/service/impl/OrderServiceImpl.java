@@ -24,7 +24,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public Order saveOrderToTable(Integer shipmentId) {
+    public Order saveOrderToTable(Integer shipmentId, String paymentMethod) {
         Order newOrder = new Order();
 
         //Generating a random string for order
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setUser(miscService.getLoggedInUser());
         newOrder.setStatus("Order Created");
         newOrder.setTotalPrice(cartService.getTotalCartValueOfUser());
-
+        newOrder.setPaymentMethod(paymentMethod);
         return orderRepo.save(newOrder);
     }
 
