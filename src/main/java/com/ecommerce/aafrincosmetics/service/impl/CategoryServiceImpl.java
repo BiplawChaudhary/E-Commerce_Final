@@ -2,8 +2,10 @@ package com.ecommerce.aafrincosmetics.service.impl;
 
 import com.ecommerce.aafrincosmetics.dto.request.CategoryRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.CategoryResponseDto;
+import com.ecommerce.aafrincosmetics.dto.response.ProductsResponseDto;
 import com.ecommerce.aafrincosmetics.entity.Category;
 import com.ecommerce.aafrincosmetics.repo.CategoryRepo;
+import com.ecommerce.aafrincosmetics.repo.ProductsRepo;
 import com.ecommerce.aafrincosmetics.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepo categoryRepo;
+    private final ProductsRepo productsRepo;
+
+
     @Override
     public CategoryResponseDto saveCategoryToTable(CategoryRequestDto dto) {
         Category newCategory = new Category();
@@ -52,6 +57,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean deleteById(Integer id) {
+//        Get all the products with that category
+        List<ProductsResponseDto> allProductsofCategory = productsRepo.findByCategory(categoryRepo.findById(id).get());
+
+//        Delete each of that productt
+        for(ProductsResponseDto each: allProductsofCategory){
+            productsRepo.deleteById(each.getId());
+        }
+
+//        Then delete the category
         categoryRepo.deleteById(id);
         return true;
     }

@@ -34,7 +34,8 @@
 <body>
 
 <!--************* Header ************-->
-<div th:replace="main/fragments/header :: header" th:with="total:${total}"></div>
+<div th:replace="main/fragments/header :: header"
+     th:with="total:${total},allCategory : ${allCategory}, cartValue : ${cartValue}"></div>
 
 <!--************ SVG *******************-->
 <div th:replace="main/fragments/svg :: svg"></div>

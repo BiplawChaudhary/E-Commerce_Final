@@ -5,12 +5,9 @@ import com.ecommerce.aafrincosmetics.dto.request.ShipmentRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
 import com.ecommerce.aafrincosmetics.entity.Order;
 import com.ecommerce.aafrincosmetics.entity.OrderItems;
-import com.ecommerce.aafrincosmetics.service.CartService;
-import com.ecommerce.aafrincosmetics.service.OrderItemsService;
-import com.ecommerce.aafrincosmetics.service.OrderService;
+import com.ecommerce.aafrincosmetics.service.*;
 import com.ecommerce.aafrincosmetics.service.Others.EmailService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
-import com.ecommerce.aafrincosmetics.service.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +22,7 @@ public class CheckoutController {
 
     private final ShipmentService shipmentService;
     private final CartService cartService;
-
+    private final CategoryService categoryService;
     private final MiscService miscService;
 
 
@@ -38,9 +35,10 @@ public class CheckoutController {
 
             Integer total= cartService.getTotalCartValueOfUser();
             model.addAttribute("cartItems", cartService.getAllCartItemsOfUser());
-
+            model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
 //            model.addAttribute("cartItems",allCartItems);
             model.addAttribute("totalPrice", total);
+            model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/checkout";
         }else{
             return "redirect:/login";
@@ -50,6 +48,8 @@ public class CheckoutController {
     @GetMapping("/get-add-address-form")
     public String getAddAddressForm(Model model){
             model.addAttribute("detail", new ShipmentRequestDto());
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/detailsForm";
 
     }

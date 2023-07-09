@@ -4,6 +4,8 @@ package com.ecommerce.aafrincosmetics.controller;
 import com.ecommerce.aafrincosmetics.dto.request.CartRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.ProductsResponseDto;
 import com.ecommerce.aafrincosmetics.dto.response.WishlistResponseDto;
+import com.ecommerce.aafrincosmetics.service.CartService;
+import com.ecommerce.aafrincosmetics.service.CategoryService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
 import com.ecommerce.aafrincosmetics.service.ProductsService;
@@ -20,8 +22,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WishlistController {
     private final WishlistService wishlistService;
-    private final ProductsService productsService;
+    private final CartService cartService;
     private final MiscService miscService;
+    private final CategoryService categoryService;
 
 
     //********* ------------- WIshlist COntroller ---------
@@ -30,8 +33,10 @@ public class WishlistController {
     public String getMyWishlist(Model model){
 
         if(miscService.isUserLoggedIn()){
+            model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
             model.addAttribute("allItems", wishlistService.allwishlistItemsOfUser());
             model.addAttribute("cartdto", new CartRequestDto());
+            model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/wishlist";
         }else{
             return "redirect:/login";
@@ -39,10 +44,10 @@ public class WishlistController {
     }
 
     @GetMapping("/add-to-wishlist/{id}")
-    public String addItemToWishlist(@PathVariable("id") Integer product_id){
+    public String addItemToWishlist(@PathVariable("id") Integer product_id, Model model){
 
         if(miscService.isUserLoggedIn()){
-
+            model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
 //                If not alreadyin wishlist then add it
             try{
                 WishlistResponseDto savedWishlistItem= wishlistService.addProductToWishlist(product_id);

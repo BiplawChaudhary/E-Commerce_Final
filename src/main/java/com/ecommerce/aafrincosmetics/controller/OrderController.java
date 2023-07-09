@@ -5,6 +5,7 @@ import com.ecommerce.aafrincosmetics.entity.Order;
 import com.ecommerce.aafrincosmetics.entity.OrderItems;
 import com.ecommerce.aafrincosmetics.entity.Products;
 import com.ecommerce.aafrincosmetics.service.CartService;
+import com.ecommerce.aafrincosmetics.service.CategoryService;
 import com.ecommerce.aafrincosmetics.service.OrderItemsService;
 import com.ecommerce.aafrincosmetics.service.OrderService;
 import com.ecommerce.aafrincosmetics.service.Others.EmailService;
@@ -26,6 +27,7 @@ public class OrderController {
     private final CartService cartService;
     private final EmailService emailService;
     private final MiscService miscService;
+    private final CategoryService categoryService;
 
 
 
@@ -71,6 +73,8 @@ public class OrderController {
     public String getOrdersPage(Model model){
         model.addAttribute("allOrders", orderService.getAllOrdersOfAUser());
         model.addAttribute("total",cartService.getTotalCartValueOfUser());
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
         return "main/order";
     }
 
@@ -90,6 +94,8 @@ public class OrderController {
 
         OrderResponseDto foundOrder = orderService.getOrderById(id);
         model.addAttribute("foundOrder", foundOrder);
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
 
 //        Adding the status messge
         if(foundOrder.getStatus().trim().equals("Created")){

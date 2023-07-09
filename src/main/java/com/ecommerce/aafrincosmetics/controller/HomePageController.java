@@ -95,7 +95,10 @@ public class HomePageController {
 //                System.out.println(each.getProductName());
 //            }
         }
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
         model.addAttribute("cartdto", new CartRequestDto());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
+
         return "main/searchResult";
     }
 
@@ -107,6 +110,8 @@ public class HomePageController {
             ProductsResponseDto singleProduct = productsService.getProductById(productId);
             model.addAttribute("product", singleProduct);
             model.addAttribute("cartRequestDto", new CartRequestDto());
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/productPage";
     }
 

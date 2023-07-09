@@ -43,7 +43,8 @@
 <body>
 
 <!--********************** HEADER *************************-->
-<div th:replace="main/fragments/header :: header"></div>
+<div th:replace="main/fragments/header :: header"
+     th:with="allCategory : ${allCategory}, cartValue : ${cartValue} "></div>
 
 <!--******************** SVG **************** -->
 <div th:replace="main/fragments/svg :: svg"></div>
