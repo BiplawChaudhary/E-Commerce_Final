@@ -73,7 +73,7 @@
                                 <!-- Name -->
                                 <div class="form-group d-flex " >
                                     <label>Quantity: </label>
-                                    <input type="text" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}">
+                                    <input type="text" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}" min="1" th:max="${item.products.stock}" required>
                                     <small class="form-text text-danger" style="font-weight: bold;"></small>
 
                                 </div>
