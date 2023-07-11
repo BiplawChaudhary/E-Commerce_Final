@@ -6,7 +6,7 @@
   <title>Product Page</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <meta name="author" content="">
+  <meta name="author" content="Aafrin Cosmetics">
   <meta name="keywords" th:content="${product.productName}">
   <meta name="description" th:content="${product.description}">
 
@@ -43,12 +43,13 @@
 <body>
 
 <!--********************** HEADER *************************-->
-<div th:replace="main/fragments/header :: header"></div>
+<div th:replace="main/fragments/header :: header"
+     th:with="allCategory : ${allCategory}, cartValue : ${cartValue} "></div>
 
 <!--******************** SVG **************** -->
 <div th:replace="main/fragments/svg :: svg"></div>
 
-<div class="container my-4">
+<div class="container my-4" style="height:fit-content;margin-bottom:2em;">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i>
@@ -66,14 +67,17 @@
     <div class="col-md-6">
       <h2 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h2>
       <hr>
+      <h4>Description</h4>
       <p th:text="${product.description}">Virgin coconut oil (VCO) is extracted from fresh coconut meats and prepared using fermentation and centrifugation process</p>
-      <p><strong>Rs. <span th:text="${product.price}"> 485</span></strong></p>
+      <h4><strong>Rs. <span th:text="${product.price}"> 485</span></strong></h4>
 <!--      <p>Manufacturer: Juas</p>-->
+      <p >Manufacturer: <span th:text="${product.manufacturer}"></span></p>
+
 
 <!--      //For add to cart button select the quantity-->
       <form th:action="@{/add-to-cart/{product_id} (product_id = ${product.id})}" method="post">
 
-        <input type="text" value="1" style="width: 8%;border-color: #ffca2c;" th:field="*{cartRequestDto.quantity}">
+        <input type="number" value="1" style="width: 8%;border-color: #ffca2c;" min="1" th:max="${product.stock}" th:field="*{cartRequestDto.quantity}" required>
         <button type="submit" class="btn btn-outline-warning"><i class="fa fa-cart-plus" aria-hidden="true"></i>
           Add to Cart</button>
         <!--      wishlist ******-->
@@ -91,7 +95,7 @@
 </div>
 
 <!-- *re****** review section -->
-<div class="container" style="margin-bottom:2em;">
+<div class="container" style="height:fit-content;margin-bottom:2em;">
   <div class="card ">
     <div class="card-body">
       <p style="color: black; text-align: center;"><strong>Products Reviews</strong></p>

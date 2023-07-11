@@ -74,29 +74,32 @@ public class HomePageController {
 
         //If the search category is null ,then search in the whole products
         if("noCategory".equals(searchCategory)){
-            System.out.println("Only no categgory called\n");
+
             //Only one value called
             List<Products> foundProducts  = productsRepo.findByProductNameContainingIgnoreCase(searchProduct);
             model.addAttribute("foundProducts",foundProducts );
-            //Display each product
-            for(Products each: foundProducts){
-                System.out.println(each.getProductName());
-            }
-
+//            //Display each product
+//            for(Products each: foundProducts){
+//                System.out.println(each.getProductName());
+//            }
 
         } else if (searchCategory != "noCategory" && searchProduct != null) {
-            System.out.println("Both not null called."); //Debug
+
             Category foundCategory = categoryRepo.findByCategoryName(searchCategory);
 
             List<Products> foundProducts = productsRepo.findByProductNameContainingIgnoreCaseAndCategoryId(searchProduct,foundCategory.getId());
 
             model.addAttribute("foundProducts", foundProducts);
-//            Display each product
-            for(Products each: foundProducts){
-                System.out.println(each.getProductName());
-            }
+////            Display each product
+//            for(Products each: foundProducts){
+//                System.out.println(each.getProductName());
+//            }
         }
-        return "demo/searchResult";
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("cartdto", new CartRequestDto());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
+
+        return "main/searchResult";
     }
 
 
@@ -107,6 +110,8 @@ public class HomePageController {
             ProductsResponseDto singleProduct = productsService.getProductById(productId);
             model.addAttribute("product", singleProduct);
             model.addAttribute("cartRequestDto", new CartRequestDto());
+        model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
+        model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/productPage";
     }
 

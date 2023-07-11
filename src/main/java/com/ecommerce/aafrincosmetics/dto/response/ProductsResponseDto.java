@@ -21,6 +21,7 @@ public class ProductsResponseDto {
     private Integer price;
     private Images images;
     private Category category;
+    private String manufacturer;
 
     public ProductsResponseDto(Products product){
         this.id = product.getId();
@@ -30,5 +31,6 @@ public class ProductsResponseDto {
         this.price = product.getPrice();
         this.images = product.getImages();
         this.category = product.getCategory();
+        this.manufacturer = product.getManufacturer();
     }
 }

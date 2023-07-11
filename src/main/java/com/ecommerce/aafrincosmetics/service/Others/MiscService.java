@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +35,18 @@ public class MiscService {
         //Finding the user
        return userRepo.getUserByUsername(username);
 
+    }
+
+    public String generateRandomOtp(){
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            int randomNumber = random.nextInt(10); // Generate a random number between 0 and 9
+            sb.append(randomNumber);
+        }
+
+        return sb.toString();
     }
 
 

@@ -1,6 +1,7 @@
 package com.ecommerce.aafrincosmetics.service.impl;
 
 import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
+import com.ecommerce.aafrincosmetics.dto.response.OrderResponseDto;
 import com.ecommerce.aafrincosmetics.entity.Cart;
 import com.ecommerce.aafrincosmetics.entity.Order;
 import com.ecommerce.aafrincosmetics.repo.OrderRepo;
@@ -11,6 +12,7 @@ import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,8 +50,44 @@ public class OrderServiceImpl implements OrderService {
         return orderRepo.save(newOrder);
     }
 
+
+
     @Override
     public Order directOrder(Integer id) {
         return null;
     }
+
+
+    //Getting all the order's of a user
+    @Override
+    public List<OrderResponseDto> getAllOrdersOfAUser() {
+        List<OrderResponseDto> returnList = new ArrayList<>();
+
+        List<Order> allData = orderRepo.findByUser(miscService.getLoggedInUser());
+
+        for(Order each: allData){
+            returnList.add(new OrderResponseDto(each));
+        }
+        return returnList;
+    }
+
+
+    //    Set the order status accordingly
+    @Override
+    public Order updateTheStatus(String newStatus, Integer id) {
+        Order foundOrder = orderRepo.findById(id).get();
+
+        foundOrder.setStatus(newStatus);
+
+        return orderRepo.save(foundOrder);
+    }
+
+    // Get Order By Id
+    @Override
+    public OrderResponseDto getOrderById(Integer id) {
+        return new OrderResponseDto(orderRepo.findById(id).get());
+    }
+
+
+
 }

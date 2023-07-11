@@ -3,6 +3,7 @@ package com.ecommerce.aafrincosmetics.controller;
 import com.ecommerce.aafrincosmetics.dto.request.CartRequestDto;
 import com.ecommerce.aafrincosmetics.dto.response.CartResponseDto;
 import com.ecommerce.aafrincosmetics.service.CartService;
+import com.ecommerce.aafrincosmetics.service.CategoryService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
 import com.ecommerce.aafrincosmetics.service.Others.ProductAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class AddToCartController {
     private final CartService cartService;
     private final MiscService miscService;
+    private final CategoryService categoryService;
 
 
     //-------------------- Add to cart --------------------------------
@@ -32,7 +34,9 @@ public class AddToCartController {
 //    @Async
     @PostMapping("/add-to-cart/{product_id}")
     public String addToCartFunction(@ModelAttribute CartRequestDto cartRequestDto, @PathVariable("product_id") Integer product_id,
-                                    RedirectAttributes redirectAttributes){
+                                    RedirectAttributes redirectAttributes, Model model){
+
+
         //If the cart value is null then:
         if(cartRequestDto.getQuantity() == null){
             redirectAttributes.addAttribute("nullQuantityError", "Please select some quantity.");
@@ -40,6 +44,7 @@ public class AddToCartController {
         }
         //Only allowing to add to cart if authenticated
         if(miscService.isUserLoggedIn()){
+            model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
             try{
                 cartRequestDto.setProduct_id(product_id);
 
@@ -66,9 +71,10 @@ public class AddToCartController {
             List<CartResponseDto> allCartItems = cartService.getAllCartItemsOfUser();
 
             model.addAttribute("cartItems",allCartItems );
-
+            model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
             model.addAttribute("deleteMsg", deleteMsg);
             model.addAttribute("total", cartService.getTotalCartValueOfUser());
+            model.addAttribute("allCategory", categoryService.getAllCategory());
             return "main/cart";
         }else{
             return "redirect:/login";
