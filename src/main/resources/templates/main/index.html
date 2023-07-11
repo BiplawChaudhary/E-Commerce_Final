@@ -236,7 +236,7 @@
                                             <div class="form-group d-flex " >
                                                 <label>Quantity: </label>
                                                 <input type="number" class="form-control border-dark-subtle" placeholder="00" min="1" th:max="${product.stock}" th:field="*{cartdto.quantity}" required>
-                                                <small class="form-text text-danger" style="font-weight: bold;"></small>
+                                                <small class="form-text" style="font-weight: bold;color:red;" th:if="${product.stock == 0}">Out Of Stock</small>
                                             </div>
                                             <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
                                         </form>

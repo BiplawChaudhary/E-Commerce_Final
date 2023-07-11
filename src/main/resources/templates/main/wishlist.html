@@ -41,9 +41,9 @@
 <!--Display the product here-->
 <div class="container" style="height:fit-content;margin-bottom:2em;">
     <div class="row">
-        <h1>My Wishlist</h1>
+        <h1 style="text-align:center;">My Wishlist</h1>
 
-        <h4 th:if="${allItems.size() == 0}">No Items in Wishlist</h4>
+        <h4 th:if="${allItems.size() == 0}" style="text-align:center;color:red;">No Items in Wishlist</h4>
 
         <div class="container">
             <div class="row">
@@ -67,11 +67,15 @@
                                 <div class="form-group d-flex " >
                                     <label>Quantity: </label>
                                     <input type="number" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}" min="1" th:max="${item.products.stock}" required>
-                                    <small class="form-text text-danger" style="font-weight: bold;"></small>
+                                    <small class="form-text" style="font-weight: bold;color:red;" th:if="${item.products.stock == 0}">Out Of Stock</small>
                                 </div>
                                 <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
                             </form>
+
+
                         </div>
+                        <br>
+                        <a th:href="@{delete-wishlist/{id}(id = ${item.id})}"><button class="btn btn-outline-danger">Delete</button></a>
                     </div>
                 </div>
             </div>

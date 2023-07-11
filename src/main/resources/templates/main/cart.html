@@ -52,17 +52,20 @@
 <!--*********************  SVG  **************************-->
 <div th:replace="main/fragments/svg :: svg"></div>
 
+
+
+<h1 style="text-align: center; margin-bottom: 1em;">My Cart</h1>
+
 <!--      If the size of the cart if zero ********-->
-<h2 th:if="${cartItems.size() == 0}" class="text-danger">
+<h4 th:if="${cartItems.size() == 0}" style="color:red;text-align:center;">
   NO ITEMS IN CART.
-</h2>
+</h4>
 
 <!--      ******* IF there are some items in the cart *******-->
 <div th:if="${cartItems.size != 0}">
 
 <!--******** Main Cart Content *****************-->
 <div class="container-fluid" style="height:fit-content;margin-bottom:2em;">
-  <h1 style="text-align: center; margin-bottom: 1em;">My Cart</h1>
   <div class="row">
     <div class="col-md-8">
 
@@ -85,7 +88,15 @@
 
                 <td th:text="${cartItem.products.productName}">Lipstick</td>
                 <td><img th:src="@{${cartItem.products.images.path}}" alt="" style="width: 90%;"></td>
-                <td><input type="number" value="1" style="width: 35%;" th:value="${cartItem.quantity}"></td>
+
+                <td>
+                  <form th:action="@{/update-cart-quantity/{id} (id = ${cartItem.id})}" method="post">
+
+                    <input type="number" th:max="${cartItem.products.stock}" style="width: 35%;" th:value="${cartItem.quantity}" name="quantity" onchange="showSubmitButton()">
+                    <input type="submit" value="Update" id="submitButton" class="btn btn-outline-primary" style="display: none;">
+                  </form>
+                </td>
+
                 <td>Rs. <span th:text="${cartItem.products.price}">1150</span></td>
                 <td>Rs. <span th:text="${cartItem.products.price * cartItem.quantity}">000</span></td>
                 <td>
@@ -136,5 +147,20 @@
   </div>
 <!--**************** FOOTER ****************************-->
 <div th:replace="main/fragments/footer :: footer"></div>
+
+
+<script th:inline="javascript">
+      function showSubmitButton() {
+  var quantityInput = document.querySelector('input[name="quantity"]');
+  var submitButton = document.getElementById('submitButton');
+
+  if (quantityInput.value !== "") {
+    submitButton.style.display = "inline-block";
+  } else {
+    submitButton.style.display = "none";
+  }
+}
+
+</script>
 </body>
 </html>

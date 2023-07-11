@@ -66,9 +66,7 @@
 
     <div class="col-md-6">
       <h2 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h2>
-      <hr>
-      <h4>Description</h4>
-      <p th:text="${product.description}">Virgin coconut oil (VCO) is extracted from fresh coconut meats and prepared using fermentation and centrifugation process</p>
+
       <h4><strong>Rs. <span th:text="${product.price}"> 485</span></strong></h4>
 <!--      <p>Manufacturer: Juas</p>-->
       <p >Manufacturer: <span th:text="${product.manufacturer}"></span></p>
@@ -87,6 +85,9 @@
 
       </form>
 
+      <hr>
+      <h4>Description</h4>
+      <p th:text="${product.description}">Virgin coconut oil (VCO) is extracted from fresh coconut meats and prepared using fermentation and centrifugation process</p>
 
 
 

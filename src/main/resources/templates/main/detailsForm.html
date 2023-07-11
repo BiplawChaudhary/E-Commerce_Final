@@ -79,6 +79,32 @@
                 </div>
             </form>
         </div>
+
+        <div class="col-lg-6">
+            <h2>Your Details</h2>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Details</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="detail: ${shipmentDetails}">
+                    <th scope="row">
+                        <p><b>City:</b> <span th:text="${detail.address}"> </span></p>
+                        <p><b>State:</b> <span th:text="${detail.city}"> </span> </p>
+                        <p><b>Address:</b> <span th:text="${detail.state}"> </span></p>
+                        <p><b>Phone:</b> <span th:text="${detail.phone}"> </span></p>
+                    </th>
+                    <td>
+
+                        <a th:href="@{/delete-shipping-address/{id}(id = ${detail.id})}"><button class="btn btn-outline-warning">Delete</button></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

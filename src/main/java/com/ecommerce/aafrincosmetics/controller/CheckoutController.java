@@ -50,6 +50,7 @@ public class CheckoutController {
             model.addAttribute("detail", new ShipmentRequestDto());
         model.addAttribute("cartValue", cartService.getTotalCartValueOfUser());
         model.addAttribute("allCategory", categoryService.getAllCategory());
+        model.addAttribute("shipmentDetails", shipmentService.getAllShipmentDetails());
             return "main/detailsForm";
 
     }
@@ -65,7 +66,7 @@ public class CheckoutController {
     @GetMapping("/delete-shipping-address/{id}")
     public String deleteTheAddress(@PathVariable("id") Integer id){
         shipmentService.deleteShipmentDetails(id);
-        return "redirect:/checkout";
+        return "redirect:/get-add-address-form";
     }
 
 }
