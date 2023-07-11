@@ -7,9 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="author" content="">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="description" content="Aafrin Cosmetics - Explore our wide range of high-quality cosmetics products. We offer makeup, skincare, and beauty products to enhance your natural beauty. Shop now and discover the perfect beauty solutions.">
+    <meta name="keywords" content="Aafrin Cosmetics, cosmetics shop, makeup, skincare, beauty products">
+    <meta name="author" content="Aafrin Cosmetics">
+    <meta name="robots" content="index, follow">
 </head>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
@@ -121,7 +122,7 @@
                                             <div class="categories mb-3 pb-3" style="color: white;">BEAUTY</div>
                                             <h3 class="banner-title"style="color: white;">Gives the Perfect Final Touch</h3>
                                             <p style="color: white;">A medium-sized, fluffy brush with slightly tapered bristles, designed for applying blush to the cheeks, creating a natural flush of color.</p>
-                                            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1"style="color: white;">Makeup collection</a>
+                                            <a href="#Makeup" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1"style="color: white;">Makeup collection</a>
                                         </div>
                                         <div class="img-wrapper col-md-5">
                                         </div>
@@ -134,7 +135,7 @@
                                             <div class="categories mb-3 pb-3">PERFECT SHADE</div>
                                             <h3 class="banner-title">Foundation that Matches Your Gorgeous Skin</h3>
                                             <p> Typically a flat or slightly tapered brush with dense bristles, used to apply liquid or cream foundation for a smooth and even coverage.</p>
-                                            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Foundation collection</a>
+                                            <a  class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Foundation collection</a>
                                         </div>
                                         <div class="img-wrapper col-md-5">
                                             <img src="/mainAssets/images/chocolat/Foundation.jpg" class="img-fluid">
@@ -148,7 +149,7 @@
                                             <div class="categories mb-3 pb-3">HEALTHY HAIR</div>
                                             <h3 class="banner-title">Herval Hair Oil to Keep Your Hair Strong</h3>
                                             <p>Hair oil adds a natural shine and luster to the hair, making it appear healthy and vibrant. .</p>
-                                            <a href="#" class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Hair Care collection</a>
+                                            <a  class="btn btn-outline-dark btn-lg text-uppercase fs-6 rounded-1">Hair Care collection</a>
                                         </div>
                                         <div class="img-wrapper col-md-5">
                                             <img src="/mainAssets/images/chocolat/Hair-Oil.jpg" class="img-fluid">
@@ -168,7 +169,7 @@
                             <div class="content-wrapper col-md-7">
                                 <div class="categories sale mb-3 pb-3">20% off</div>
                                 <h3 class="banner-title">Hair Curler</h3>
-                                <a href="#" class="d-flex align-items-center nav-link">Accessories collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
+                                <a href="#Appliances" class="d-flex align-items-center nav-link">Accessories collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                             </div>
 
                         </div>
@@ -180,7 +181,7 @@
                             <div class="content-wrapper col-md-7">
                                 <div class="categories sale mb-3 pb-3">15% off</div>
                                 <h3 class="item-title">Personal Care</h3>
-                                <a href="#" class="d-flex align-items-center nav-link">Personal Care collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
+                                <a href="#Personal Care" class="d-flex align-items-center nav-link">Personal Care collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                             </div>
 
                         </div>
@@ -202,7 +203,7 @@
 
 
 <section class="" th:each="cat: ${allCategory}" >
-    <div class="container-fluid" >
+    <div class="container" >
 
         <div class="row">
             <div class="col-md-12">
@@ -213,55 +214,89 @@
                         <h3 th:text="${cat.categoryName}" th:id="${cat.categoryName}">All Products</h3>
                     </div>
 
-                   <div class="d-flex justify-content-space-around ">
-                       <div th:each="product: ${allProduct}">
-                           <div th:if="${product.category.categoryName == cat.categoryName}">
-<!--                               On clicking the product redirect to the product's page ****-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3" th:each="product: ${allProduct}" th:if="${product.category.categoryName == cat.categoryName}">
+                                <div class="product-item mx-3">
+                                    <a th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
 
-                               <div class="product-item mx-3">
-
-                                       <a th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-
-<!--                                       <a  th:if="${wishlist.?[product == productId].size() > 0}" th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#redheart"></use></svg></a>-->
-
-
-                                       <!--                                        Image here-->
-                                       <figure>
-                                           <!--                                            ////// ********* REDIRECT TO SINGLE PAGE OF PRODUCT HERE *****-->
-                                           <a href=" " title="Product Title">
-                                               <img th:src="@{${product.images.path}}"  class="tab-image">
-                                           </a>
-                                       </figure>
-                                   <a th:href="@{/get-single-product/{product_id} (product_id = ${product.id})}" style="text-decoration:none;">
-                                       <!--                                        **********   DESCription *********-->
-                                       <h3 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>
-                                       <span class="qty"><span th:text="${product.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                                       <span class="price" >Rs. <span th:text="${product.price}">495</span></span>
-                                       <p >Manufacturer: <span th:text="${product.manufacturer}"></span></p>
-                                   </a>
-                                       <div class="d-flex align-items-center justify-content-between">
-
-
-                                           <!--                                            QUantity Form-->
-                                           <form th:action="@{/add-to-cart/{product_id} (product_id = ${product.id})}" method="post">
-                                               <!-- Name -->
-                                               <div class="form-group d-flex " >
-                                                   <label>Quantity: </label>
-                                                   <input type="number"  class="form-control border-dark-subtle" placeholder="00" min="1" th:max="${product.stock}" th:field="*{cartdto.quantity}" required>
-                                                   <small class="form-text text-danger" style="font-weight: bold;"></small>
-
-                                               </div>
+                                    <figure>
+                                        <a href=" " title="Product Title">
+                                            <img th:src="@{${product.images.path}}" class="tab-image" alt="Product Image">
+                                        </a>
+                                    </figure>
+                                    <a th:href="@{/get-single-product/{product_id} (product_id = ${product.id})}" style="text-decoration:none;">
+                                        <h3 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>
+                                        <span class="qty"><span th:text="${product.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
+                                        <span class="price" >Rs. <span th:text="${product.price}">495</span></span>
+                                        <p >Manufacturer: <span th:text="${product.manufacturer}"></span></p>
+                                    </a>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <form th:action="@{/add-to-cart/{product_id} (product_id = ${product.id})}" method="post">
+                                            <div class="form-group d-flex " >
+                                                <label>Quantity: </label>
+                                                <input type="number" class="form-control border-dark-subtle" placeholder="00" min="1" th:max="${product.stock}" th:field="*{cartdto.quantity}" required>
+                                                <small class="form-text text-danger" style="font-weight: bold;"></small>
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
+                                        </form>
+                                        <p id="error-msg" style="display: none; color: red;">Only <span th:text="${product.stock}"></span> left.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-                                               <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
-                                           </form>
-                                           <p id="error-msg" style="display: none; color: red;">Only <span th:text="${product.stock}"></span> left.</p>
+                    <!--                   <div class="d-flex justify-content-space-around ">-->
+<!--                       <div th:each="product: ${allProduct}">-->
+<!--                           <div th:if="${product.category.categoryName == cat.categoryName}">-->
+<!--&lt;!&ndash;                               On clicking the product redirect to the product's page ****&ndash;&gt;-->
 
-                                   </div>
-                               </div>
-                       </div>
-                           </div>
-                       </div>
+<!--                               <div class="product-item mx-3">-->
+
+<!--                                       <a th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>-->
+
+<!--&lt;!&ndash;                                       <a  th:if="${wishlist.?[product == productId].size() > 0}" th:href="@{/add-to-wishlist/{id} (id = ${product.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#redheart"></use></svg></a>&ndash;&gt;-->
+
+
+<!--                                       &lt;!&ndash;                                        Image here&ndash;&gt;-->
+<!--                                       <figure>-->
+<!--                                           &lt;!&ndash;                                            ////// ********* REDIRECT TO SINGLE PAGE OF PRODUCT HERE *****&ndash;&gt;-->
+<!--                                           <a href=" " title="Product Title">-->
+<!--                                               <img th:src="@{${product.images.path}}"  class="tab-image">-->
+<!--                                           </a>-->
+<!--                                       </figure>-->
+<!--                                   <a th:href="@{/get-single-product/{product_id} (product_id = ${product.id})}" style="text-decoration:none;">-->
+<!--                                       &lt;!&ndash;                                        **********   DESCription *********&ndash;&gt;-->
+<!--                                       <h3 th:text="${product.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>-->
+<!--                                       <span class="qty"><span th:text="${product.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>-->
+<!--                                       <span class="price" >Rs. <span th:text="${product.price}">495</span></span>-->
+<!--                                       <p >Manufacturer: <span th:text="${product.manufacturer}"></span></p>-->
+<!--                                   </a>-->
+<!--                                       <div class="d-flex align-items-center justify-content-between">-->
+
+
+<!--                                           &lt;!&ndash;                                            QUantity Form&ndash;&gt;-->
+<!--                                           <form th:action="@{/add-to-cart/{product_id} (product_id = ${product.id})}" method="post">-->
+<!--                                               &lt;!&ndash; Name &ndash;&gt;-->
+<!--                                               <div class="form-group d-flex " >-->
+<!--                                                   <label>Quantity: </label>-->
+<!--                                                   <input type="number"  class="form-control border-dark-subtle" placeholder="00" min="1" th:max="${product.stock}" th:field="*{cartdto.quantity}" required>-->
+<!--                                                   <small class="form-text text-danger" style="font-weight: bold;"></small>-->
+
+<!--                                               </div>-->
+
+
+<!--                                               <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>-->
+<!--                                           </form>-->
+<!--                                           <p id="error-msg" style="display: none; color: red;">Only <span th:text="${product.stock}"></span> left.</p>-->
+
+<!--                                   </div>-->
+<!--                               </div>-->
+<!--                       </div>-->
+<!--                           </div>-->
+<!--                       </div>-->
                    </div>
 
 
@@ -390,7 +425,7 @@
                                         <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
                                         <figure>
                                             <a href="product-single.html" title="Product Title">
-                                                <img src="/mainAssets/mages/coconut.jpeg"  class="tab-image">
+                                                <img src="/mainAssets/images/coconut.jpeg"  class="tab-image">
                                             </a>
                                         </figure>
                                         <h3>Juas Cold Pressed Virgin Coconut Oil 180ml</h3>

@@ -39,52 +39,85 @@
 <div th:replace="main/fragments/svg :: svg"></div>
 
 <!--Display the product here-->
-<div class="container" style="height:80vh">
+<div class="container" style="height:fit-content;margin-bottom:2em;">
     <div class="row">
         <h1>My Wishlist</h1>
 
         <h4 th:if="${allItems.size() == 0}">No Items in Wishlist</h4>
 
-        <div class="d-flex justify-content-space-around ">
-            <div th:each="item: ${allItems}">
-                    <!--                               On clicking the product redirect to the product's page ****-->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" th:each="item: ${allItems}">
                     <div class="product-item mx-3">
                         <a th:href="@{/add-to-wishlist/{id} (id = ${item.products.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
 
-                        <!--                                        Image here-->
                         <figure>
-                            <!--                                            ////// ********* REDIRECT TO SINGLE PAGE OF PRODUCT HERE *****-->
                             <a href=" " title="Product Title">
-                                <img th:src="@{${item.products.images.path}}"  class="tab-image">
+                                <img th:src="@{${item.products.images.path}}" class="tab-image" alt="Product Image">
                             </a>
                         </figure>
                         <a th:href="@{/get-single-product/{product_id} (product_id = ${item.products.id})}" style="text-decoration:none;">
-                            <!--                                        **********   DESCription *********-->
                             <h3 th:text="${item.products.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>
                             <span class="qty"><span th:text="${item.products.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
                             <span class="price" >Rs. <span th:text="${item.products.price}">495</span></span>
                             <p>Manufacturer: <span th:text="${item.products.manufacturer}"></span></p>
                         </a>
                         <div class="d-flex align-items-center justify-content-between">
-
-
-                            <!--                                            QUantity Form-->
                             <form th:action="@{/add-to-cart/{product_id} (product_id = ${item.products.id})}" method="post">
-                                <!-- Name -->
                                 <div class="form-group d-flex " >
                                     <label>Quantity: </label>
-                                    <input type="text" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}" min="1" th:max="${item.products.stock}" required>
+                                    <input type="number" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}" min="1" th:max="${item.products.stock}" required>
                                     <small class="form-text text-danger" style="font-weight: bold;"></small>
-
                                 </div>
-
                                 <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>
                             </form>
-
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+
+        <!--        <div class="d-flex justify-content-space-around ">-->
+<!--            <div th:each="item: ${allItems}">-->
+<!--                    &lt;!&ndash;                               On clicking the product redirect to the product's page ****&ndash;&gt;-->
+<!--                    <div class="product-item mx-3">-->
+<!--                        <a th:href="@{/add-to-wishlist/{id} (id = ${item.products.id})}" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>-->
+
+<!--                        &lt;!&ndash;                                        Image here&ndash;&gt;-->
+<!--                        <figure>-->
+<!--                            &lt;!&ndash;                                            ////// ********* REDIRECT TO SINGLE PAGE OF PRODUCT HERE *****&ndash;&gt;-->
+<!--                            <a href=" " title="Product Title">-->
+<!--                                <img th:src="@{${item.products.images.path}}"  class="tab-image">-->
+<!--                            </a>-->
+<!--                        </figure>-->
+<!--                        <a th:href="@{/get-single-product/{product_id} (product_id = ${item.products.id})}" style="text-decoration:none;">-->
+<!--                            &lt;!&ndash;                                        **********   DESCription *********&ndash;&gt;-->
+<!--                            <h3 th:text="${item.products.productName}">Juas Cold Pressed Virgin Coconut Oil 180ml</h3>-->
+<!--                            <span class="qty"><span th:text="${item.products.stock}">1</span> Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>-->
+<!--                            <span class="price" >Rs. <span th:text="${item.products.price}">495</span></span>-->
+<!--                            <p>Manufacturer: <span th:text="${item.products.manufacturer}"></span></p>-->
+<!--                        </a>-->
+<!--                        <div class="d-flex align-items-center justify-content-between">-->
+
+
+<!--                            &lt;!&ndash;                                            QUantity Form&ndash;&gt;-->
+<!--                            <form th:action="@{/add-to-cart/{product_id} (product_id = ${item.products.id})}" method="post">-->
+<!--                                &lt;!&ndash; Name &ndash;&gt;-->
+<!--                                <div class="form-group d-flex " >-->
+<!--                                    <label>Quantity: </label>-->
+<!--                                    <input type="number" class="form-control border-dark-subtle" placeholder="00" value="00" th:field="*{cartdto.quantity}" min="1" th:max="${item.products.stock}" required>-->
+<!--                                    <small class="form-text text-danger" style="font-weight: bold;"></small>-->
+
+<!--                                </div>-->
+
+<!--                                <button type="submit" class="btn btn-outline-success"> <i class="bi bi-cart-plus" style="margin-right:0.5em;">Add To Cart</i></button>-->
+<!--                            </form>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </div>

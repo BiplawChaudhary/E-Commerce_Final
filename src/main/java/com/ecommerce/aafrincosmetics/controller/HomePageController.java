@@ -74,7 +74,7 @@ public class HomePageController {
 
         //If the search category is null ,then search in the whole products
         if("noCategory".equals(searchCategory)){
-            System.out.println("Only no categgory called\n");
+
             //Only one value called
             List<Products> foundProducts  = productsRepo.findByProductNameContainingIgnoreCase(searchProduct);
             model.addAttribute("foundProducts",foundProducts );
@@ -84,7 +84,7 @@ public class HomePageController {
 //            }
 
         } else if (searchCategory != "noCategory" && searchProduct != null) {
-            System.out.println("Both not null called."); //Debug
+
             Category foundCategory = categoryRepo.findByCategoryName(searchCategory);
 
             List<Products> foundProducts = productsRepo.findByProductNameContainingIgnoreCaseAndCategoryId(searchProduct,foundCategory.getId());

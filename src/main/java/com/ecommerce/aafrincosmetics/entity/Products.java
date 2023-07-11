@@ -19,7 +19,7 @@ public class Products {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(unique = true)
+//    @Column(unique = true)
     private String productName;
 
     @Column(length = 2000)
