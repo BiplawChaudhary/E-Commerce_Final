@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AafrincosmeticsApplication implements CommandLineRunner {
 
+	/*
+	stripe.api.key= sk_test_51NStAhIxawXnTLZNBiD8UdCgoCguCW19PrP2gKN7nclGBksCZnHEUF3l04vjeeEmSLYKAsTh96j0By5XyL9C8ffj00qY2YXZv6
+stripe.public.key= pk_test_51NStAhIxawXnTLZNHWdWxdWGM1QtN0YE6X68Ag8TZNl89mkxpI30TcXhk9i9QNbUWjmXhliUUsjFx3P5ATrRfmw800aL9OSUaR
+	*/
+
 	private final CategoryRepo categoryRepo;
 
 	public static void main(String[] args) {

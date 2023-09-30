@@ -64,8 +64,14 @@ public class OrderController {
 
         Order createdOrder = orderService.saveOrderToTable(Integer.valueOf(selectedDetails[0]),paymentMethod);
         redirectAttributes.addAttribute("createdOrder", createdOrder);
-        return "redirect:/set-order-items";
-
+        if (paymentMethod.equals("cod")){
+            return "redirect:/set-order-items";
+        }
+        else if(paymentMethod.equals("stripe")){
+            return "redirect:/stripe-payment";
+        }
+        return "redirect:/";//This is an unreachable code.
+//        This is just for removing the error
     }
 
     //Get the order's Page
