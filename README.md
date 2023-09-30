@@ -16,9 +16,10 @@ Following are the feature of this project:
 
 ### Technologies Used
 1.Spring Boot MVC
-2. Postgres Sql
+2. PostgreSQL
 3. Lombok
 4. Spring Security
+5. Spring JPA
 
 ### Instruction to run
 <ol>
