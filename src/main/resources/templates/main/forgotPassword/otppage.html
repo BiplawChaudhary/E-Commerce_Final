@@ -56,8 +56,9 @@
                     <input type="text" name="" id="" placeholder="" style="box-sizing: border-box;" th:field="*{otp.otp}">
                     <input type="submit" class="btn btn-outline-success">
                 </form>
-
-                <h5 th:text="${otpMismatch}" style="color:red;"></h5>
+                <p>The OTP will exipre in <span style="color:red;">2 minutes.</span></p>
+                <h5 th:text="${otpMismatch}" style="color:red;" max="6"></h5>
+                <h5 th:text="${otpMismatch1}" style="color:red;" max="6"></h5>
             </div>
 
         </div>

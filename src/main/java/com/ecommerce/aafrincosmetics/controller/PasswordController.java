@@ -7,6 +7,7 @@ import com.ecommerce.aafrincosmetics.entity.User;
 import com.ecommerce.aafrincosmetics.repo.UserRepo;
 import com.ecommerce.aafrincosmetics.service.Others.EmailService;
 import com.ecommerce.aafrincosmetics.service.Others.MiscService;
+import com.ecommerce.aafrincosmetics.service.Others.OTPService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class PasswordController {
     private final MiscService miscService;
     private final UserRepo userRepo;
     private final EmailService emailService;
+    private final OTPService otpService;
 
 
     private String otp;
@@ -48,6 +50,8 @@ public class PasswordController {
         if(foundUser !=null){
             //Generate the random OTP
             otp = miscService.generateRandomOtp();
+            //Stroe the OTP
+            otpService.storeOTP(otp);
 
             //Send the OPT to user in email
             String subject = "Password Reset OTP";
@@ -59,7 +63,7 @@ public class PasswordController {
                     + "Aafrin Cosmetics";
 
             emailService.sendEmail(email,subject,message);
-            return "redirect:/forgot-password/opt-page";
+            return "redirect:/forgot-password/otp-page";
 
         }else{ //If not found
             redirectAttributes.addAttribute("emailNotFound", "Email is not regiested.");
@@ -68,14 +72,16 @@ public class PasswordController {
     }
 
     //    Get OPT Page
-    @GetMapping("/forgot-password/opt-page")
+    @GetMapping("/forgot-password/otp-page")
     public String getOtpPage(Model model,
-                             @ModelAttribute("otpMismatch") String otpMismatch){
+                             @ModelAttribute("otpMismatch") String otpMismatch,
+                            @ModelAttribute("otpMismatch") String otpMismatch1){
 //        Add a blank dto
         model.addAttribute("otp", new OtpRequestDto());
 //        Generate a random opt and send it to user through email
 
         model.addAttribute("otpMismatch",otpMismatch);
+        model.addAttribute("otpMismatch1",otpMismatch1);
         return "main/forgotPassword/otppage";
     }
 
@@ -84,15 +90,18 @@ public class PasswordController {
     @PostMapping("/forgot-password/opt-submit")
     public String checkOtp(@ModelAttribute OtpRequestDto otpRequestDto,
                            RedirectAttributes redirectAttributes){
-        //Verify the OPT.
-        if(otpRequestDto.getOtp().trim().equals(otp)){
+
+        if((otpService.isOTPValid(otpRequestDto.getOtp().trim())) &&
+                (otpRequestDto.getOtp().trim().equals(otp))){
             return "redirect:/forgot-password/new-password-form";
         }
-
-        redirectAttributes.addAttribute("otpMismatch", "OTP didn't Match.");
+        else if(!otpService.isOTPValid(otpRequestDto.getOtp().trim())){
+            redirectAttributes.addAttribute("otpMismatch", "OTP is expired.");
+        }
+        else if (!(otpRequestDto.getOtp().trim().equals(otp))){
+            redirectAttributes.addAttribute("otpMismatch1", "The OTP is you entered is wrong..");
+        }
         return "redirect:/forgot-password/otp-page";
-
-
     }
 
     @GetMapping("/forgot-password/new-password-form")
