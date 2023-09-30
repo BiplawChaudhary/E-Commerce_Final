@@ -2,6 +2,7 @@ package com.ecommerce.aafrincosmetics.controller;
 
 
 import com.ecommerce.aafrincosmetics.dto.request.Request;
+import com.ecommerce.aafrincosmetics.entity.Order;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,8 @@ public class PaymentController {
     @Value("${stripe.api.publicKey}")
     private String publicKey;
     @GetMapping("/stripe-payment")
-    public String home(Model model){
-        model.addAttribute("request", new Request());
+    public String home(Model model, @ModelAttribute("createdOrder")Order createdOrder){
+        model.addAttribute("request", new Request(createdOrder));
         return "/stripe/index";
     }
     @PostMapping("/stripe-payment")
